@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { lazy, Suspense } from "react";
+import "./App.css";
+import { Router, RouteComponentProps, Link } from "@reach/router";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+const ContactUs: React.FC<RouteComponentProps> = lazy(
+  () => import("./Pages/Contact-us")
+);
+const Home: React.FC<RouteComponentProps> = lazy(() => import("./Pages/Home"));
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <nav className=" navbar-inverse">
+        <div className="navbar-header">Bespoke Creation</div>
+        <Link to="/">Home</Link>
+        &nbsp; &nbsp;&nbsp;&nbsp;
+        <Link to="/contact-us">Contact Us</Link>
+      </nav>
+      <Suspense fallback={<div>Loading</div>}>
+        <Router>
+          <Home path="/" />
+          <ContactUs path="/contact-us" />
+        </Router>
+      </Suspense>
     </div>
   );
 }
